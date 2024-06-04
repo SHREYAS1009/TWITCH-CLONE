@@ -3,6 +3,8 @@ import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
 import authRoute from "./src/routes/authRoute.js";
+import mongoose from "mongoose";
+
 dotenv.config();
 
 const PORT= process.env.PORT || process.env.API_PORT;
@@ -20,7 +22,13 @@ app.get('/',(req,res)=>{
 
 app.use('/api/auth',authRoute);
 
-
-server.listen(PORT,()=>{
-   console.log(`PORT is listening on ${PORT}`);
+mongoose.connect(process.env.MONGO_URL)
+.then(()=>{
+    server.listen(PORT,()=>{
+        console.log(`PORT is listening on ${PORT}`);
+     });
+}).catch(err=>{
+    console.log("Databse connection failed.Server not started");
+    console.log(err);
 });
+
