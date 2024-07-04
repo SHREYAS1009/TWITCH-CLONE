@@ -20,7 +20,7 @@ const loginSchema =Joi.object({
     email:Joi.string().email().required(),
 
 })
-const router=express.Router();
+const router=express1.Router();
 router.get('/register',validator.body(registerSchema), postRegister);
 
 
